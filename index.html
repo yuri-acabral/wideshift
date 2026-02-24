@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://kit.fontawesome.com/7dbf639042.js" crossorigin="anonymous"></script>
+<title>Terminal de Minério de Ferro</title>
+
+</head>
+
+<body>
+
+<header>Terminal T-ORE</header>
+
+<!-- PAGE 1 -->
+<div id="dashboard" class="page active">
+    <div class="status-banner">OPERANDO NORMALMENTE</div>
+
+    <div class="card-opr-atual clickable" onclick="showPage('fluxo')">
+        <h3>Operação Atual</h3>
+        <p>Navio: MV Shandong Soar</p>
+        <p>Berço: Leste</p>
+        <p>Volume: 176340 tons</p>
+
+    </div>
+
+    <div class="card-produtividade">
+        <h3>Produtividade</h3>
+        <div class="progress">
+            <div class="progress-bar"></div>
+        </div>
+
+        <small>Progresso: 68%</small>
+
+        <div class="metric">
+            <span>8113 t/h</span>
+            <span>Meta: 7914 t/h</span>
+        </div>
+
+        <div class="metric">
+            <span>Previsão de Término:</span>
+            <span>02:15</span>
+        </div>
+    </div>
+
+    <div class="card clickable" onclick="showPage('alertas')">
+        <h3>Alertas</h3>
+        <p><i class="fa-solid fa-check" style="color: rgb(60, 181, 8);"></i>3715-BA-02 em falha</p>
+        <p><i class="fa-solid fa-triangle-exclamation" style="color: rgb(219, 173, 13);"></i>Realizar Teste de Rota 22:00</p>
+
+        
+    </div>
+
+    <div class="button-row">
+        <button class="btn-primary" onclick="showPage('fluxo')">Ver Fluxo</button>
+        <button class="btn-secondary" onclick="showPage('equipamentos')">Manutenção</button>
+    </div>
+</div>
+
+<!-- PAGE 2 -->
+<div id="fluxo" class="page">
+    <div class="card">
+        <h3>Operações</h3>
+        <div class="timeline">
+            <div class="step">
+                <h4>Atracação <span class="badge green">Concluído</span></h4>
+            </div>
+            <div class="step">
+                <h4>Inspeção <span class="badge yellow">Em andamento</span></h4>
+            </div>
+            <div class="step">
+                <h4>Carregamento <span class="badge green">Checklist OK</span></h4>
+                <ul>
+                    <li>✔ Aceite do NOR</li>
+                    <li>✔ Informar apontamentos a Sala de Controle</li>
+                    <li>✔ Lancha Requisitada</li>
+                </ul>
+            </div>
+            <div class="step">
+                <h4>Desatracação <span class="badge">Pendente</span></h4>
+            </div>
+        </div>
+        <button class="btn-primary">Atualizar Status</button>
+    </div>
+</div>
+
+<!-- PAGE 3 -->
+<div id="alertas" class="page">
+    <div class="card">
+        <h3>Alertas</h3>
+
+        <div class="equipment">
+            <span>3715-BA-02</span>
+            <span class="badge green">Operacional</span>
+        </div>
+        <small>Sem Falhas</small>
+        <hr>
+
+        <div class="equipment">
+            <span>Linha de Embarque</span>
+            <span class="badge yellow">Atenção</span>
+        </div>
+        <small>Realizar teste de rota 22:00</small>
+        <hr>
+
+        <div class="equipment">
+            <span>Shiploader</span>
+            <span class="badge red">Parado</span>
+        </div>
+
+        <small>Bloqueado</small> <br>
+
+    
+
+    </div>
+</div>
+
+<!-- FOOTER NAV -->
+<div class="footer-nav">
+    <button onclick="showPage('dashboard')">Geral</button>
+    <button onclick="showPage('fluxo')">Operações</button>
+    <button onclick="showPage('alertas')">Alertas</button>
+</div>
+
+<script>
+function showPage(pageId){
+    document.querySelectorAll('.page').forEach(page=>{
+        page.classList.remove('active');
+    });
+    document.getElementById(pageId).classList.add('active');
+}
+</script>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
+  // SUA CONFIG REAL
+  const firebaseConfig = {
+    apiKey: "AIzaSyCpJIY_refjsF5jHDplBdKV8cpPIJIBKsQ",
+    authDomain: "eshift-83570.firebaseapp.com",
+    projectId: "eshift-83570",
+    storageBucket: "eshift-83570.firebasestorage.app",
+    messagingSenderId: "993251621913",
+    appId: "1:993251621913:web:aa1001aad4bfeb71263e88"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // DEIXAR GLOBAL (pra funcionar com onclick)
+  window.salvar = async function () {
+    const nome = document.getElementById("nome").value;
+
+    if (!nome) {
+      alert("Digite um nome");
+      return;
+    }
+
+    await addDoc(collection(db, "usuarios"), {
+      nome: nome,
+      criadoEm: new Date()
+    });
+
+    alert("Salvo no Firebase 🚀");
+  };
+</script>
+
+<script src="index.js"></script></body>
+</html>
