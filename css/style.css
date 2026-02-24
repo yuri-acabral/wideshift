@@ -39,7 +39,7 @@ header{
     padding:15px;
     border-radius:12px;
     margin-bottom:15px;
-    background-image: url("../img/1x/cut-ship_1.png");
+    background-image: url("../img/1x/ship-cropped.png");
     background-size:225px;
     background-repeat: no-repeat;
     background-position: bottom right;
@@ -176,3 +176,4 @@ button{
     color:white;
     padding:15px;
 }
+
