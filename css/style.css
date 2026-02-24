@@ -1,6 +1,6 @@
 :root{
     --bg:#0f1c2e;
-    --card:#1b2b44;
+    --card:#10161d;
     --accent:#ff7a00;
     --green:#1ecb73;
     --yellow:#ffc107;
@@ -176,4 +176,5 @@ button{
     color:white;
     padding:15px;
 }
+
 
